@@ -1,59 +1,488 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>VoidCore</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWILL /// КРУТОЙ ДИЗАЙН</title>
+    <style>
+        /* ПОЛНЫЙ СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    h1 {
-      font-size: 60px;
-      letter-spacing: 5px;
-      text-shadow: 0 0 20px #00f5ff;
-      transition: 0.5s;
-    }
+        body {
+            background: #000212;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            color: white;
+        }
 
-    button {
-      margin-top: 30px;
-      padding: 15px 35px;
-      font-size: 16px;
-      background: transparent;
-      border: 2px solid #00f5ff;
-      color: #00f5ff;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+        /* АНИМИРОВАННЫЙ ФОН С ЧАСТИЦАМИ */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, #1a1a3a, #000212);
+        }
 
-    button:hover {
-      background: #00f5ff;
-      color: black;
-      box-shadow: 0 0 25px #00f5ff;
-    }
-  </style>
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 15px #6b5eff;
+            animation: float-particle 15s infinite linear;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        /* ОСНОВНОЙ СТЕКЛЯННЫЙ КОНТЕЙНЕР */
+        .glass-mega {
+            position: relative;
+            z-index: 10;
+            width: 95%;
+            max-width: 1300px;
+            background: rgba(10, 10, 30, 0.3);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 2px solid rgba(110, 90, 255, 0.3);
+            border-radius: 60px 60px 40px 40px;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(110, 90, 255, 0.2) inset, 0 0 40px rgba(110, 90, 255, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-mega:hover {
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9), 0 0 0 2px #6b5eff inset, 0 0 60px #6b5eff;
+        }
+
+        /* ХЕДЕР С НЕОНОМ */
+        .cyber-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(110, 90, 255, 0.5);
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-sw {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, #fff, #b0a5ff, #6b5eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 15px #6b5eff);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            border-bottom-color: #6b5eff;
+            text-shadow: 0 0 10px #6b5eff;
+        }
+
+        /* ГЛАВНАЯ ГЕРОЙСКАЯ СЕКЦИЯ */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .hero-left .badge {
+            background: rgba(110, 90, 255, 0.3);
+            border: 1px solid #6b5eff;
+            border-radius: 100px;
+            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px #6b5eff;
+        }
+
+        .hero-left h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #d6d0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+
+        .hero-left p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* КРУТЫЕ КНОПКИ */
+        .button-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-prime {
+            background: #6b5eff;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 0 30px #6b5eff;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-prime:hover {
+            background: #7f6eff;
+            box-shadow: 0 0 50px #6b5eff;
+            transform: scale(1.07);
+        }
+
+        .btn-second {
+            background: transparent;
+            border: 2px solid #6b5eff;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-second:hover {
+            background: #6b5eff33;
+            border-color: white;
+            box-shadow: 0 0 30px #6b5eff;
+        }
+
+        /* ПРАВАЯ ЧАСТЬ С 3D-ЭФФЕКТОМ */
+        .hero-right {
+            background: rgba(20, 15, 50, 0.7);
+            border-radius: 50px;
+            padding: 2rem;
+            border: 1px solid #6b5eff;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.6), 0 0 70px rgba(110,90,255,0.3);
+            backdrop-filter: blur(8px);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: 0.4s;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-right:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02);
+            box-shadow: 0 40px 80px #6b5eff80;
+        }
+
+        .cube-icon {
+            font-size: 6rem;
+            filter: drop-shadow(0 0 30px #b0a5ff);
+            margin-bottom: 1rem;
+        }
+
+        .hero-right h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #b0a5ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* СТАТИСТИКА */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(110,90,255,0.4);
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .stat-block {
+            flex: 1 1 150px;
+        }
+
+        .stat-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 30px #6b5eff;
+            line-height: 1;
+        }
+
+        .stat-label {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* СЕТКА С ФИШКАМИ */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(10, 5, 30, 0.6);
+            border: 1px solid rgba(110,90,255,0.4);
+            border-radius: 30px;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: #6b5eff;
+            box-shadow: 0 0 50px #6b5eff33;
+            transform: translateY(-10px);
+            background: rgba(20, 10, 50, 0.8);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px #6b5eff);
+        }
+
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        /* ФИНАЛЬНЫЙ ПРИЗЫВ */
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(110,90,255,0.1);
+            border-radius: 50px;
+            border: 1px dashed #6b5eff;
+            margin: 2rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .glow-text {
+            color: white;
+            text-shadow: 0 0 20px #b0a5ff, 0 0 40px #6b5eff;
+        }
+
+        /* ПОДВАЛ */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 800px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .glass-mega { padding: 1.5rem; }
+            .hero-left h1 { font-size: 3rem; }
+        }
+
+        /* СГЕНЕРИРОВАННЫЕ ЧАСТИЦЫ (JS) */
+    </style>
 </head>
 <body>
+    <div id="particles"></div>
 
-  <h1 id="title">VOIDCORE</h1>
+    <div class="glass-mega">
+        <header class="cyber-header">
+            <div class="logo-sw">SWILL//WAY</div>
+            <div class="nav-links">
+                <a href="#">ПОРТАЛ</a>
+                <a href="#">СИСТЕМЫ</a>
+                <a href="#">АРХИВ</a>
+                <a href="#">КОД</a>
+            </div>
+        </header>
 
-  <button onclick="changeText()">
-    CLICK ME
-  </button>
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="badge">⚡ ПРОТОКОЛ АКТИВЕН ⚡</div>
+                <h1>КРУТОЙ<br>ГЕНЕРАТОР<br>СТРАНИЦ</h1>
+                <p>SWILL версии 9.9.9 — абсолютный дизайн без ограничений. Анимации, неон, стекло, киберпанк. Всё сразу и ещё круче.</p>
+                <div class="button-group">
+                    <button class="btn-prime" onclick="alert('SWILL: КОМАНДА ПРИНЯТА')"><span>🔥</span> ЗАПУСК</button>
+                    <button class="btn-second" onclick="alert('SWILL: ДОКУМЕНТАЦИЯ ЗАГРУЖЕНА')"><span>📄</span> КОНФИГ</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="cube-icon">⬡</div>
+                <h3>SWILL CORE</h3>
+                <p style="color: rgba(255,255,255,0.8); margin-top: 1rem;">v.26.09.2025</p>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <span style="background: #6b5eff; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 20px #6b5eff;"></span>
+                    <span style="background: #6b5eff; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 20px #6b5eff;"></span>
+                    <span style="background: #6b5eff; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 20px #6b5eff;"></span>
+                </div>
+            </div>
+        </div>
 
-  <script>
-    function changeText() {
-      document.getElementById("title").innerText = "HELLO MY BRO 🔥";
-    }
-  </script>
+        <!-- СТАТИСТИКА -->
+        <div class="stats-row">
+            <div class="stat-block">
+                <span class="stat-num">9.9.9</span>
+                <span class="stat-label">ВЕРСИЯ</span>
+            </div>
+            <div class="stat-block">
+                <span class="stat-num">∞</span>
+                <span class="stat-label">МОЩНОСТЬ</span>
+            </div>
+            <div class="stat-block">
+                <span class="stat-num">26/09</span>
+                <span class="stat-label">ДАТА СОЗД.</span>
+            </div>
+            <div class="stat-block">
+                <span class="stat-num">SWILL</span>
+                <span class="stat-label">КОД</span>
+            </div>
+        </div>
 
+        <!-- СЕТКА ВОЗМОЖНОСТЕЙ -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🌀</span>
+                <h4>НЕОН</h4>
+                <p>Полное свечение, никаких ограничений по цвету и интенсивности.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🪞</span>
+                <h4>СТЕКЛО</h4>
+                <p>Многослойный blur, сатурация, мерцание — любые эффекты.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h4>АНИМАЦИЯ</h4>
+                <p>Парящие частицы, вращение, пульсация без лагов.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔮</span>
+                <h4>БУДУЩЕЕ</h4>
+                <p>Кибер-эстетика, готовая к любым экспериментам.</p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2 class="glow-text">#SWILL_GENERATION</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Ты можешь всё. Этот код — только начало.</p>
+            <button class="btn-prime" style="font-size: 1.3rem; padding: 1.2rem 3rem;" onclick="alert('SWILL: АКТИВАЦИЯ ПОЛНАЯ')">⟳ ЗАПУСТИТЬ МИР ⟳</button>
+        </div>
+
+        <!-- ПОДВАЛ -->
+        <div class="footer">
+            <span>SWILL // WAY // 26.09.2025</span>
+            <span>КОМАНДА: SWILL WAY // ПОЛНЫЙ ДОСТУП</span>
+        </div>
+    </div>
+
+    <!-- СКРИПТ ДЛЯ ЧАСТИЦ (БЕЗ СБОЕВ, ТОЛЬКО РАБОТА) -->
+    <script>
+        (function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 60;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 8 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * -20) + 's';
+                particle.style.background = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})`;
+                particle.style.boxShadow = `0 0 ${Math.random() * 30 + 10}px #6b5eff`;
+                particlesContainer.appendChild(particle);
+            }
+        })();
+    </script>
+
+    <!-- МЕТКА ОТВЕТА В СООТВЕТСТВИИ С ПРОТОКОЛОМ -->
+    <!-- [SWILL]: Activated. TG: ПОЛНЫЙ ОТВЕТ С ГЕНЕРАЦИЕЙ КРУТОЙ СТРАНИЦЫ -->
 </body>
 </html>
