@@ -13,19 +13,13 @@
       flex-direction: column;
       font-family: Arial, sans-serif;
       color: white;
-      overflow: hidden;
     }
 
     h1 {
       font-size: 60px;
       letter-spacing: 5px;
       text-shadow: 0 0 20px #00f5ff;
-      animation: glow 2s infinite alternate;
-    }
-
-    p {
-      opacity: 0.7;
-      margin-top: -10px;
+      transition: 0.5s;
     }
 
     button {
@@ -45,21 +39,21 @@
       color: black;
       box-shadow: 0 0 25px #00f5ff;
     }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00f5ff; }
-      to { text-shadow: 0 0 40px #00f5ff; }
-    }
   </style>
 </head>
 <body>
 
-  <h1>VOIDCORE</h1>
-  <p>System Online</p>
+  <h1 id="title">VOIDCORE</h1>
 
-  <button onclick="alert('Access Granted 🚀')">
-    ENTER
+  <button onclick="changeText()">
+    CLICK ME
   </button>
+
+  <script>
+    function changeText() {
+      document.getElementById("title").innerText = "HELLO MY BRO 🔥";
+    }
+  </script>
 
 </body>
 </html>
