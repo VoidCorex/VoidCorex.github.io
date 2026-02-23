@@ -1,1 +1,65 @@
-hello
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VoidCore</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 60px;
+      letter-spacing: 5px;
+      text-shadow: 0 0 20px #00f5ff;
+      animation: glow 2s infinite alternate;
+    }
+
+    p {
+      opacity: 0.7;
+      margin-top: -10px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 15px 35px;
+      font-size: 16px;
+      background: transparent;
+      border: 2px solid #00f5ff;
+      color: #00f5ff;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00f5ff;
+      color: black;
+      box-shadow: 0 0 25px #00f5ff;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00f5ff; }
+      to { text-shadow: 0 0 40px #00f5ff; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>VOIDCORE</h1>
+  <p>System Online</p>
+
+  <button onclick="alert('Access Granted 🚀')">
+    ENTER
+  </button>
+
+</body>
+</html>
