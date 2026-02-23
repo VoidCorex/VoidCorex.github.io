@@ -19,18 +19,17 @@
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            overflow: hidden; /* Убираем скролл для частиц на весь экран */
+            overflow: hidden;
             position: relative;
         }
 
-        /* Контейнер для частиц (на весь экран) */
         #particles-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Частицы не мешают нажатию кнопок */
+            pointer-events: none;
             z-index: 5;
             overflow: hidden;
         }
@@ -46,7 +45,6 @@
             animation: flyParticle 4s linear infinite;
         }
 
-        /* Анимация для летящих частиц */
         @keyframes flyParticle {
             0% {
                 transform: translate(0, 0) scale(1);
@@ -58,7 +56,6 @@
             }
         }
 
-        /* Главный карточек-интерфейс */
         .interface {
             background-color: #1e1e2f;
             border-radius: 32px;
@@ -119,7 +116,6 @@
             box-shadow: 0 2px 0 #0f0f1f, 0 8px 20px black;
         }
 
-        /* Специфические стили для кнопок (необязательно) */
         .config-btn {
             background: #3a2a4a;
             border-color: #a070d0;
@@ -132,7 +128,6 @@
             color: #a0f0e0;
         }
 
-        /* Область вывода сообщений */
         .output {
             background: #12121c;
             border-radius: 40px;
@@ -149,14 +144,14 @@
         #outputText {
             font-size: 28px;
             font-weight: 800;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             color: #ff88c0;
             text-shadow: 0 0 10px #ff44aa, 0 0 20px #ff22aa;
             word-break: break-word;
             transition: all 0.3s ease;
+            text-transform: uppercase;
         }
 
-        /* Индикатор "фейковой загрузки" */
         .fake-loader {
             width: 100%;
             height: 4px;
@@ -177,7 +172,6 @@
             box-shadow: 0 0 15px #b07aff;
         }
 
-        /* Скрытый элемент для загрузки */
         .status-text {
             color: #9a9ac0;
             font-size: 14px;
@@ -188,7 +182,6 @@
 </head>
 <body>
 
-    <!-- Контейнер для частиц (фейковая загрузка) -->
     <div id="particles-container"></div>
 
     <div class="interface">
@@ -199,7 +192,6 @@
             <button class="void-btn" id="voidBtn">🌑 VOID</button>
         </div>
 
-        <!-- Индикатор фейковой загрузки (появляется при клике на Config) -->
         <div id="loaderContainer" style="display: none;">
             <div class="fake-loader">
                 <div class="loader-progress" id="loaderProgress"></div>
@@ -207,7 +199,6 @@
             <div class="status-text" id="loaderStatus">загрузка системы... 0%</div>
         </div>
 
-        <!-- Вывод текста (HELLO HELLO HELLO) -->
         <div class="output">
             <span id="outputText"></span>
         </div>
@@ -215,7 +206,6 @@
 
     <script>
         (function() {
-            // Элементы интерфейса
             const configBtn = document.getElementById('configBtn');
             const voidBtn = document.getElementById('voidBtn');
             const outputSpan = document.getElementById('outputText');
@@ -224,49 +214,38 @@
             const loaderStatus = document.getElementById('loaderStatus');
             const particlesContainer = document.getElementById('particles-container');
 
-            // Переменные для управления загрузкой
             let loadingActive = false;
             let loadingInterval = null;
 
-            // ---- Функции для работы с частицами ----
             function createParticle() {
-                if (!loadingActive) return; // Создаем частицы только во время загрузки
+                if (!loadingActive) return;
 
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
 
-                // Начальная позиция: случайная точка в пределах окна (иногда за пределами для эффекта)
                 const startX = Math.random() * window.innerWidth;
                 const startY = Math.random() * window.innerHeight;
+                const dx = (Math.random() - 0.5) * 600;
+                const dy = (Math.random() - 0.5) * 600;
 
-                // Направление: в случайную сторону
-                const dx = (Math.random() - 0.5) * 600; // смещение по X
-                const dy = (Math.random() - 0.5) * 600; // смещение по Y
-
-                // Устанавливаем CSS-переменные для анимации
                 particle.style.left = startX + 'px';
                 particle.style.top = startY + 'px';
                 particle.style.setProperty('--dx', dx);
                 particle.style.setProperty('--dy', dy);
 
-                // Случайный размер (2–7px)
                 const size = 2 + Math.random() * 6;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
 
-                // Случайный цвет оттенка голубого/фиолетового
-                const hue = 200 + Math.random() * 100; // 200-300 (голубой -> фиолетовый)
+                const hue = 200 + Math.random() * 100;
                 particle.style.backgroundColor = `hsl(${hue}, 80%, 70%)`;
                 particle.style.boxShadow = `0 0 12px hsl(${hue}, 90%, 70%), 0 0 20px hsl(${hue}, 90%, 60%)`;
 
-                // Время анимации (3-7 сек)
                 const duration = 3 + Math.random() * 5;
                 particle.style.animationDuration = duration + 's';
 
-                // Добавляем в контейнер
                 particlesContainer.appendChild(particle);
 
-                // Удаляем частицу после окончания анимации, чтобы не забивать DOM
                 setTimeout(() => {
                     if (particle.parentNode) {
                         particle.remove();
@@ -274,23 +253,19 @@
                 }, duration * 1000);
             }
 
-            // Запуск генерации частиц с интервалом
             function startParticleGeneration() {
                 if (!loadingActive) {
                     loadingActive = true;
-                    // Запускаем интервал (каждые 150-300 мс создаем частицу)
-                    const intervalTime = 180; 
+                    const intervalTime = 180;
                     window.particleInterval = setInterval(() => {
                         if (loadingActive) {
                             createParticle();
-                            // Иногда создаем сразу несколько для насыщенности
                             if (Math.random() > 0.6) {
                                 setTimeout(() => createParticle(), 30);
                             }
                         }
                     }, intervalTime);
 
-                    // Дополнительно создаем пачку сразу
                     for (let i = 0; i < 10; i++) {
                         setTimeout(() => createParticle(), i * 40);
                     }
@@ -303,42 +278,32 @@
                     clearInterval(window.particleInterval);
                     window.particleInterval = null;
                 }
-                // Не удаляем существующие частицы, они исчезнут сами по анимации
             }
 
-            // Очистка частиц (опционально при завершении загрузки можно удалить все)
             function removeAllParticles() {
                 const particles = particlesContainer.querySelectorAll('.particle');
                 particles.forEach(p => p.remove());
             }
 
-            // ---- Фейковая загрузка ----
             function startFakeLoading() {
-                // Если загрузка уже идет, не запускаем повторно (или сбросим)
                 if (loadingInterval) {
-                    // Сбросим прогресс и перезапустим
                     clearInterval(loadingInterval);
                     loadingInterval = null;
                 }
 
-                // Показываем контейнер загрузки
                 loaderContainer.style.display = 'block';
                 loaderProgress.style.width = '0%';
                 loaderStatus.innerText = 'загрузка системы... 0%';
 
-                // Активируем частицы
                 startParticleGeneration();
 
                 let progress = 0;
-                // Быстро наращиваем до 99%
                 loadingInterval = setInterval(() => {
                     if (!loadingActive) {
-                        // На случай, если остановлено извне
                         if (loadingInterval) clearInterval(loadingInterval);
                         return;
                     }
 
-                    // Увеличиваем прогресс, но нелинейно, с остановкой около 99%
                     if (progress < 80) {
                         progress += Math.random() * 10 + 5;
                     } else if (progress < 95) {
@@ -346,9 +311,7 @@
                     } else if (progress < 99) {
                         progress += Math.random() * 0.5;
                     } else {
-                        // Останавливаемся на 99%, дальше не идем
                         progress = 99;
-                        // Можно оставить интервал тикать, но он не будет расти
                     }
 
                     if (progress > 99) progress = 99;
@@ -365,14 +328,11 @@
                 }
                 stopParticleGeneration();
 
-                // Завершаем прогресс до 100% (плавно)
                 if (loaderContainer.style.display === 'block') {
                     loaderProgress.style.width = '100%';
                     loaderStatus.innerText = 'загрузка системы... 100%';
-                    // Скрываем через небольшую паузу
                     setTimeout(() => {
                         loaderContainer.style.display = 'none';
-                        // Очищаем частицы для красоты (необязательно)
                         removeAllParticles();
                     }, 600);
                 } else {
@@ -380,19 +340,10 @@
                 }
             }
 
-            // ---- Обработчики кнопок ----
             configBtn.addEventListener('click', () => {
-                // Сначала останавливаем всё, что могло быть (перезапуск)
                 stopFakeLoading();
-                // Удаляем прошлый вывод
                 outputSpan.innerText = '';
-
-                // Запускаем загрузку снова
                 startFakeLoading();
-
-                // Через некоторое время (5 секунд) автоматически завершаем (имитация конца)
-                // но можно оиссать вручную другой кнопкой, но в ТЗ не сказано останавливать,
-                // сделаем автозавершение через 7 секунд, чтобы не вечно крутилось
                 setTimeout(() => {
                     if (loadingActive) {
                         stopFakeLoading();
@@ -400,36 +351,19 @@
                 }, 7000);
             });
 
+            // ИЗМЕНЕНО: теперь при нажатии на VOID выводится "ТЕБЯ ВЗЛОМАЛИ"
             voidBtn.addEventListener('click', () => {
-                // Появляется надпись HELLO HELLO HELLO
-                outputSpan.innerText = 'HELLO HELLO HELLO';
-
-                // Небольшой эффект: при клике на void останавливаем загрузку (опционально, но пусть будет)
-                // Можно закомментировать, если не нужно.
-                // Но по тексту ТЗ "кнопка VOID которая когда нажимает появляется надпись HELLO HELLO HELLO"
-                // не сказано отключать загрузку. Но в демо логично её завершить.
-                // Решил: загрузку НЕ сбрасываем, но можно добавить фичу:
-                // stopFakeLoading(); // Раскомментируй, если надо прерывать загрузку при нажатии на VOID.
-
-                // Альтернативно: ничего не делаем с загрузкой, просто выводим текст.
-                // Оставим без остановки загрузки (пусть частицы продолжают летать, если активны).
-                // Для красоты: можно кратковременно подсветить.
+                outputSpan.innerText = 'ТЕБЯ ВЗЛОМАЛИ';
+                // Загрузка не останавливается (как и просили в предыдущем варианте)
             });
 
-            // Чтобы при нажатии на пустоту, если загрузка была, текст не менялся,
-            // все работает: вывод HELLO поверх, но загрузка продолжается.
-
-            // Инициализация: скрываем индикатор загрузки
             loaderContainer.style.display = 'none';
 
-            // Небольшая дополнительная функция: завершение загрузки при уходе со страницы (не обязательно)
             window.addEventListener('beforeunload', function() {
                 if (loadingInterval) clearInterval(loadingInterval);
             });
-
-            // Для адаптации частиц под ресайз не требуется особых действий,
-            // они создаются динамически.
         })();
     </script>
 </body>
 </html>
+
