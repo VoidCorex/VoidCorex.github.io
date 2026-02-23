@@ -3,69 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID</title>
+    <title>VOID | Крутая страница</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Анимированный фон с частицами */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Контент поверх фона */
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 8vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: glow 3s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+                         0 0 20px rgba(0, 255, 255, 0.5),
+                         0 0 40px rgba(0, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.5vw;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            color: #0ff;
+        }
+
+        .glitch-text {
+            font-size: 2vw;
+            font-weight: 700;
+            position: relative;
+            animation: glitch 5s infinite;
+            cursor: pointer;
+            pointer-events: auto;
+            padding: 15px 30px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #fff;
+            display: inline-block;
+        }
+
+        .glitch-text:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            border-color: #0ff;
+            transform: scale(1.1);
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+                            0 0 20px rgba(0, 255, 255, 0.5),
+                            0 0 40px rgba(0, 255, 255, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.9),
+                            0 0 40px rgba(0, 255, 255, 0.7),
+                            0 0 80px rgba(0, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: skew(0deg);
+            }
+            95% {
+                transform: skew(0deg);
+            }
+            96% {
+                transform: skew(10deg);
+            }
+            97% {
+                transform: skew(-10deg);
+            }
+            98% {
+                transform: skew(0deg);
+            }
+        }
+
+        .stats {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            z-index: 3;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        .corner {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 3;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0ff;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 5px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 15vw;
+            }
+            .subtitle {
+                font-size: 3vw;
+            }
+            .glitch-text {
+                font-size: 4vw;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="particles"></div>
-
-    <div class="glass-mega">
-        <header class="cyber-header">
-            <div class="logo-sw">//VOID</div>
-        </header>
-
-        <div class="hero-grid">
-            <div class="hero-left">
-                <div class="badge">⚡ VOID АКТИВЕН ⚡</div>
-                <h1>VOID<br>CORE<br>SYSTEM</h1>
-                <p>Версия 9.9.9 — абсолютный дизайн без ограничений.</p>
-                <div class="button-group">
-                    <button class="btn-prime" onclick="alert('VOID АКТИВИРОВАН')">
-                        🔥 ENTER VOID
-                    </button>
-                    <button class="btn-second" onclick="alert('CONFIG VOID')">
-                        ⚙ CONFIG
-                    </button>
-                </div>
-            </div>
-
-            <div class="hero-right">
-                <div class="cube-icon">⬡</div>
-                <h3>VOID</h3>
-                <p style="color: rgba(255,255,255,0.8); margin-top: 1rem;">v.26.09.2025</p>
-            </div>
-        </div>
-
-        <div class="stats-row">
-            <div class="stat-block">
-                <span class="stat-num">9.9.9</span>
-                <span class="stat-label">VERSION</span>
-            </div>
-            <div class="stat-block">
-                <span class="stat-num">∞</span>
-                <span class="stat-label">POWER</span>
-            </div>
-            <div class="stat-block">
-                <span class="stat-num">26/09</span>
-                <span class="stat-label">DATE</span>
-            </div>
-            <div class="stat-block">
-                <span class="stat-num">VOID</span>
-                <span class="stat-label">CORE</span>
-            </div>
-        </div>
-
-        <div class="cta-section">
-            <h2 class="glow-text">#VOID</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">WELCOME TO VOID.</p>
-            <button class="btn-prime" style="font-size: 1.3rem; padding: 1.2rem 3rem;" onclick="alert('VOID FULL ACCESS')">
-                ⟳ ACTIVATE VOID ⟳
-            </button>
-        </div>
-
-        <div class="footer">
-            <span>// VOID //</span>
-            <span>FULL ACCESS</span>
-        </div>
+    <canvas id="canvas"></canvas>
+    
+    <div class="content">
+        <h1>VOID</h1>
+        <div class="subtitle">Enter The Void</div>
+        <a href="#" class="glitch-text">▶ ПЕРЕЙТИ В БЕЗДНУ</a>
     </div>
+
+    <div class="stats">⚡ SYSTEM: ONLINE // STATUS: ACTIVE</div>
+    <div class="corner">VOID 2.0</div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Устанавливаем размер canvas на весь экран
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Класс для частицы
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.z = Math.random() * 1000; // Глубина
+                this.size = Math.random() * 2 + 0.5;
+                this.speed = Math.random() * 5 + 2;
+                this.color = `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, ${Math.random() * 0.5 + 0.2})`;
+            }
+
+            update() {
+                this.z -= this.speed;
+                
+                // Если частица улетела далеко, возвращаем её назад
+                if (this.z <= 0) {
+                    this.reset();
+                    this.z = 1000;
+                }
+            }
+
+            draw() {
+                // Преобразование 3D координат в 2D
+                const scale = 500 / this.z;
+                const x2d = (this.x - canvas.width / 2) * scale + canvas.width / 2;
+                const y2d = (this.y - canvas.height / 2) * scale + canvas.height / 2;
+                const size2d = this.size * scale;
+
+                // Рисуем только если частица в пределах видимости
+                if (x2d > 0 && x2d < canvas.width && y2d > 0 && y2d < canvas.height) {
+                    ctx.beginPath();
+                    ctx.arc(x2d, y2d, size2d, 0, Math.PI * 2);
+                    
+                    // Создаем градиент для эффекта свечения
+                    const gradient = ctx.createRadialGradient(x2d, y2d, 0, x2d, y2d, size2d * 2);
+                    gradient.addColorStop(0, this.color);
+                    gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                    
+                    // Добавляем яркую точку в центре
+                    ctx.beginPath();
+                    ctx.arc(x2d, y2d, size2d * 0.3, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fill();
+                }
+            }
+        }
+
+        // Создаем массив частиц
+        const particles = [];
+        const particleCount = 200;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Добавляем несколько крупных частиц для разнообразия
+        for (let i = 0; i < 20; i++) {
+            const particle = new Particle();
+            particle.size = Math.random() * 4 + 2;
+            particles.push(particle);
+        }
+
+        // Функция анимации
+        function animate() {
+            // Очищаем canvas с эффектом послесвечения
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Обновляем и рисуем частицы
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Добавляем случайные линии для эффекта "глитча"
+            if (Math.random() < 0.01) {
+                ctx.strokeStyle = 'rgba(0, 255, 255, 0.2)';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 3; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.stroke();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Эффект при движении мыши
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / canvas.width - 0.5) * 2;
+            mouseY = (e.clientY / canvas.height - 0.5) * 2;
+            
+            // Немного меняем позицию частиц в зависимости от мыши
+            particles.forEach(particle => {
+                // Легкое смещение
+            });
+        });
+
+        // Эффект при клике
+        document.addEventListener('click', () => {
+            // Создаем вспышку
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Добавляем новые частицы
+            for (let i = 0; i < 10; i++) {
+                const particle = new Particle();
+                particle.z = 500;
+                particle.x = mouseX * canvas.width + canvas.width/2;
+                particle.y = mouseY * canvas.height + canvas.height/2;
+                particles.push(particle);
+            }
+            
+            // Удаляем лишние частицы
+            while (particles.length > 250) {
+                particles.shift();
+            }
+        });
+
+    </script>
 </body>
 </html>
