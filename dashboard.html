@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa Stealer | Unix</title>
+    <link rel="stylesheet" href="/static/panel.css">
+    <link rel="icon" href="/static/Santa.png">
+</head>
+<body>
+    <div id="root">
+        <div class="min-h-screen relative overflow-hidden" style="background-color: rgb(5, 1, 1);">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <img src="/static/Santa.png" alt="Santa" class="sidebar-logo">
+                    <span class="sidebar-title">Santa Stealer</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-item active" onclick="switchTab('dashboard'); return false;">
+                        <span class="sidebar-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="sidebar-item" onclick="switchTab('logs'); return false;">
+                        <span class="sidebar-icon">📋</span>
+                        <span>Logs</span>
+                    </a>
+                    <a href="#" class="sidebar-item" onclick="switchTab('build'); return false;">
+                        <span class="sidebar-icon">🔧</span>
+                        <span>Build</span>
+                    </a>
+                    <a href="#" class="sidebar-item" onclick="switchTab('traffic'); return false;">
+                        <span class="sidebar-icon">📊</span>
+                        <span>Traffic</span>
+                    </a>
+                    <a href="#" class="sidebar-item" onclick="switchTab('account'); return false;">
+                        <span class="sidebar-icon">👤</span>
+                        <span>Account</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <div class="top-bar-left">
+                        <span class="page-title" id="page-title">Dashboard</span>
+                    </div>
+                    <div class="top-bar-right">
+                        <button class="btn-logout">Logout</button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="content-dashboard" class="tab-content active">
+                    <div class="content-wrapper">
+                        <!-- Stats Grid -->
+                        <div class="stats-grid-4">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Logs</div>
+                                <div class="stat-value" id="total-logs">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Total Size</div>
+                                <div class="stat-value" id="total-size-stat">0 MB</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Today</div>
+                                <div class="stat-value" id="logs-today">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Active Uploads</div>
+                                <div class="stat-value" id="active-uploads-stat">0</div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Recent Activity</h3>
+                                <button class="convert-btn" data-text="Refresh" onclick="loadDashboard()"></button>
+                            </div>
+                            <div class="card-body">
+                                <div id="recent-activity">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs Tab -->
+                <div id="content-logs" class="tab-content">
+                    <div class="content-wrapper">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Stealer Logs</h3>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="convert-btn" data-text="Show Filters" onclick="toggleFilters()"></button>
+                                    <button class="convert-btn" data-text="Refresh" onclick="loadLogs()"></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="logs-stats" style="margin-bottom: 20px;">
+                                    <span class="text-white">Total logs: <strong id="logs-count">0</strong></span>
+                                    <span class="text-white" style="margin-left: 30px;">Total Size: <strong id="logs-size">0MB</strong></span>
+                                </div>
+                                
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" onclick="selectAll(this)"></th>
+                                                <th>Country</th>
+                                                <th>IP Address</th>
+                                                <th>Applications</th>
+                                                <th>Wallets</th>
+                                                <th>LogID</th>
+                                                <th>Size (MB)</th>
+                                                <th>Date</th>
+                                                <th>Watermark</th>
+                                                <th>Tag</th>
+                                                <th>Downloads</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="logs-tbody">
+                                            <tr><td colspan="12" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Build Tab -->
+                <div id="content-build" class="tab-content">
+                    <div class="content-wrapper">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Data Collection Structure</h3>
+                            </div>
+                            <div class="card-body" id="build-structure">
+                                <div class="folder-tree" id="folder-tree">
+                                    Loading...
+                                </div>
+                                
+                                <div class="system-info-section" style="margin-top: 30px;">
+                                    <h4 class="section-title">💻 System Information</h4>
+                                    <div class="info-grid" id="system-info">
+                                        Loading...
+                                    </div>
+                                </div>
+
+                                <div class="network-info-section" style="margin-top: 30px;">
+                                    <h4 class="section-title">🌐 Network Information</h4>
+                                    <div class="info-grid" id="network-info">
+                                        Loading...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traffic Tab -->
+                <div id="content-traffic" class="tab-content">
+                    <div class="content-wrapper">
+                        <h2 class="page-heading">Traffic Analytics</h2>
+                        
+                        <div class="stats-grid-4" style="margin-bottom: 20px;">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Log Size</div>
+                                <div class="stat-value" id="traffic-total-size">0 MB</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Average Log Size</div>
+                                <div class="stat-value" id="traffic-avg-size">0 MB</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Average Logs / Day</div>
+                                <div class="stat-value" id="traffic-avg-day">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Total Logs</div>
+                                <div class="stat-value" id="traffic-total-logs">0</div>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="card">
+                                <div class="card-header"><h3>Logs Today</h3></div>
+                                <div class="card-body">
+                                    <div class="stat-value-large" id="traffic-today">0</div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header"><h3>Logs This Week</h3></div>
+                                <div class="card-body">
+                                    <div class="stat-value-large" id="traffic-week">0</div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header"><h3>Logs This Month</h3></div>
+                                <div class="card-body">
+                                    <div class="stat-value-large" id="traffic-month">0</div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header"><h3>Active Chunks</h3></div>
+                                <div class="card-body">
+                                    <div class="stat-value-large" id="traffic-chunks">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Tab -->
+                <div id="content-account" class="tab-content">
+                    <div class="content-wrapper">
+                        <h2 class="page-heading">Account Information</h2>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="account-grid">
+                                    <div class="account-item">
+                                        <div class="account-label">User ID</div>
+                                        <div class="account-value">Admin</div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Account Key</div>
+                                        <div class="account-value">
+                                            <span id="account-key">••••••••••••••••</span>
+                                            <button class="copy-btn" onclick="copyKey()">Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Account Created</div>
+                                        <div class="account-value" id="account-created">-</div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Plan</div>
+                                        <div class="account-value">Local</div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Total Builds</div>
+                                        <div class="account-value" id="total-builds">0</div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Successful Builds</div>
+                                        <div class="account-value" id="successful-builds">0</div>
+                                    </div>
+                                    <div class="account-item">
+                                        <div class="account-label">Failed Builds</div>
+                                        <div class="account-value">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 20px;">
+                            <div class="card-header">
+                                <h3>Server Configuration</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="config-item">
+                                    <span class="config-label">Upload Endpoint:</span>
+                                    <code class="config-value">http://127.0.0.1:6767/upload</code>
+                                </div>
+                                <div class="config-item">
+                                    <span class="config-label">Auth Token:</span>
+                                    <code class="config-value">3eb81cc2b6ec0658e13798532a05514210d64f0488c7e5771175f5974325bae8</code>
+                                </div>
+                                <div class="config-item">
+                                    <span class="config-label">Watermark:</span>
+                                    <code class="config-value">@BluelineStealer</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+
